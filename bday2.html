@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oii! Happy Brithday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Dancing+Script:wght@600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #1a1a2e;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* --- Starry Background --- */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* --- Special Dad Star --- */
+        .guardian-star {
+            position: absolute;
+            top: 15%;
+            right: 20%;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            box-shadow: 0 0 20px #fff, 0 0 40px #ffd700;
+            border-radius: 50%;
+            animation: pulse 3s infinite;
+            z-index: 1;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px #fff; }
+            50% { transform: scale(1.3); box-shadow: 0 0 40px #ffd700; }
+            100% { transform: scale(1); box-shadow: 0 0 20px #fff; }
+        }
+
+        /* --- Container --- */
+        .container {
+            z-index: 10;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* --- Scene 1: Emotional Intro --- */
+        #scene1 { display: flex; flex-direction: column; align-items: center; }
+        .typing-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            line-height: 2;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            min-height: 100px;
+        }
+        .next-btn {
+            background: transparent;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            padding: 10px 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: none; /* Hidden initially */
+            animation: blink 1s infinite;
+        }
+        .next-btn:hover { background: #ffd700; color: #000; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* --- Scene 2: The Game UI --- */
+        #scene2 { display: none; }
+        .game-ui {
+            border: 4px solid #fff;
+            padding: 40px;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .pixel-header {
+            font-family: 'Press Start 2P', cursive;
+            color: #4cc9f0;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .stats {
+            text-align: left;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #f72585;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        .start-btn {
+            background: #4cc9f0;
+            border: none;
+            box-shadow: 4px 4px 0px #3a0ca3;
+            color: #000;
+            padding: 15px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .start-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #3a0ca3; }
+
+        /* --- Scene 3: Celebration --- */
+        #scene3 { display: none; }
+        .birthday-card {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            line-height: 1.4;
+        }
+        .cr-badge {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: #ffd700;
+            color: #000;
+            padding: 10px;
+            border-radius: 50%;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            transform: rotate(15deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .birthday-card p {
+            margin-bottom: 12px;
+        }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3em; color: #ff006e; margin-bottom: 10px; }
+        .birthday-card .name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            color: #3a0ca3;
+            margin: 6px 0 18px;
+        }
+        p { margin-bottom: 15px; font-size: 1.1em; }
+        .highlight { color: #3a0ca3; font-weight: 600; }
+        .shuttlecock {
+            font-size: 36px;
+            position: absolute;
+            animation: none;
+            bottom: 16px;
+            right: 16px;
+        }
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* --- Confetti Canvas --- */
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Starry Background -->
+    <div id="stars"></div>
+    <div class="guardian-star" title="Watching over you"></div>
+
+    <canvas id="confetti"></canvas>
+
+    <div class="container">
+        
+        <!-- Scene 1: The Emotional Bridge -->
+        <div id="scene1">
+            <div class="typing-text" id="typewriter"></div>
+            <button class="next-btn" onclick="goToScene2()">CONTINUE >></button>
+        </div>
+
+        <!-- Scene 2: The Game Interface -->
+        <div id="scene2">
+            <div class="game-ui">
+                <div class="pixel-header">CHARACTER STATS</div>
+                <div class="stats">
+                    <p>> NAME: THE BEST CR</p>
+                    <p>> CLASS: GAME DESIGNER</p>
+                    <p>> SKILL: BADMINTON SMASH (100/100)</p>
+                    <p>> CURRENT LEVEL: 19 -> 20</p>
+                    <br>
+                    <p style="color: #fff; font-size: 9px;">
+                        * SYSTEM NOTE: A legendary player (Dad) has<br>
+                        joined Spectator Mode. He is cheering<br>
+                        for your victory.
+                    </p>
+                </div>
+                <button class="start-btn" onclick="goToScene3()">UNLOCK LEVEL 20</button>
+            </div>
+        </div>
+
+        <!-- Scene 3: The Party -->
+        <div id="scene3">
+            <div class="birthday-card">
+                <div class="cr-badge">MVP<br>CR</div>
+                <div class="shuttlecock">🏸</div>
+                <h1>Happy Birthday!</h1>
+                <h2 class="name">Madhumitha</h2>
+                <p>
+                    I know you didn't want to celebrate, but the world needs your smile. 
+                    You are the strongest <strong>GIRL</strong>, the best <strong>DAUGHTER</strong>, 
+                    and the most amazing friend.
+                </p>
+                <p>
+                    Your dad loved seeing you happy. Let's make this year a tribute to him 
+                    by living it fully, designing amazing games, and smashing every challenge like a shuttlecock!
+                </p>
+                <p class="highlight">I've got your back, always.</p>
+                <p class="highlight">Have a Great Life ahead</p>
+                <p style="font-family: 'Dancing Script'; font-size: 1.5em; margin-top: 20px;"> </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Generate Stars
+        const starContainer = document.getElementById('stars');
+        for(let i=0; i<100; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            let xy = Math.random() * 100;
+            let duration = Math.random() * 1 + 1;
+            let size = Math.random() * 2;
+            
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.animationDuration = duration + 's';
+            
+            starContainer.appendChild(star);
+        }
+
+        // 2. Typewriter Effect for Scene 1
+        const text = "Hey... I know things feel heavy right now. \nIt’s okay to feel that way. \nBut look at the sky... \nThe brightest stars shine to guide us.\nAnd the game must go on, because you are the main character.";
+        let i = 0;
+        const typeWriterElement = document.getElementById('typewriter');
+        const nextBtn = document.querySelector('.next-btn');
+
+        function typeWriter() {
+            if (i < text.length) {
+                typeWriterElement.innerHTML += text.charAt(i) === '\n' ? '<br>' : text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                nextBtn.style.display = 'block';
+            }
+        }
+
+        // Start typing after a small delay
+        setTimeout(typeWriter, 1000);
+
+        // 3. Navigation Functions
+        function goToScene2() {
+            document.getElementById('scene1').style.display = 'none';
+            document.getElementById('scene2').style.display = 'block';
+        }
+
+        function goToScene3() {
+            document.getElementById('scene2').style.display = 'none';
+            document.getElementById('scene3').style.display = 'block';
+            document.body.style.background = 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)';
+            document.querySelector('.guardian-star').style.display = 'none'; // Fade star into the light
+            startConfetti();
+        }
+
+        // 4. Confetti Effect (Simple)
+        const canvas = document.getElementById("confetti");
+        const ctx = canvas.getContext("2d");
+        let confettiParticles = [];
+
+        function startConfetti() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const colors = ['#ff006e', '#8338ec', '#ffbe0b', '#fb5607'];
+
+            for (let i = 0; i < 150; i++) {
+                confettiParticles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 10 + 5,
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * 360
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiParticles.forEach((p, index) => {
+                p.y += p.speed;
+                p.angle += 2;
+                
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.angle * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctx.restore();
+
+                if (p.y > canvas.height) {
+                    p.y = -10;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateConfetti);
+        }
+    </script>
+</body>
+</html>
